@@ -1,19 +1,4 @@
-
-public class PatterMatch {
-
-	public static boolean match(String s, String p)
-	
-	{
-		char star='*';
-		String st="" + star;
-		
-		char question='?';
-		String que=""+question;
-		
-	if(p.contains(que))
-	{
-		 
-		 public class PatternMatch {
+public class PatternMatcher {
 
 	public static boolean match(String s, String p)
 	
@@ -23,6 +8,9 @@ public class PatterMatch {
 		
 		char question='?';
 		String que=""+question;
+		
+		if(p.isEmpty())
+			return true;
 		
 	if(p.contains(que))
 	{
@@ -32,7 +20,8 @@ public class PatterMatch {
 		int fir=s.indexOf(first);
 		String second=p.substring(index+1);
 		int sec=s.indexOf(second);
-		if(s.contains(first)& s.contains(second)&fir<sec)
+		System.out.println(sec);
+		if(s.contains(first)& s.contains(second)&(fir<sec||sec==0))
 		{
 			
 			return match(s,first)& match(s,second);
@@ -46,9 +35,19 @@ public class PatterMatch {
 	if(p.contains(st))
 	{
 		int index=p.indexOf(star);
-		String rest1=s.substring(index+1);
-		String rest2=p.substring(index+1);
-		return match(s.substring(0,index),p.substring(0, index))&(rest1.contains(rest2));
+		String first=p.substring(0, index-1);
+		int fir=s.indexOf(first);
+		String second=p.substring(index+1);
+		int sec=s.indexOf(second);
+		System.out.println(sec);
+		if(s.contains(first)& s.contains(second)&(fir<sec||sec==0))
+		{
+			
+			return match(s,first)& match(s,second);
+		}
+		
+		else
+			return false;
 		
 	}
 	
@@ -64,40 +63,11 @@ public class PatterMatch {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		String a="abcdef";
-		String b="*ef";
+		String a="abcdefAAAA";
+		String b="de*";
 		System.out.println(match(a,b));
 		
 		 
- 
-	}
-		
-	}
-	
-	if(p.contains(st))
-	{
-		int index=p.indexOf(star);
-		String rest1=s.substring(index+1);
-		String rest2=p.substring(index+1);
-		return match(s.substring(0,index),p.substring(0, index))&(rest1.contains(rest2));
-		
-	}
-	
-	if(s.contains(p))
-	{
-		return true;
-	}
-	
-	else
-		return false;
-	}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		String a="abcdef";
-		String b="d?";
-		System.out.println(match(a,b));
  
 	}
 
