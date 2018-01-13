@@ -20,22 +20,24 @@ public class EchoClient {
 
 			BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 
-			PrintWriter outToServer = new PrintWriter(sock.getOutputStream(), true);
+			PrintWriter outToServer = new PrintWriter(sock.getOutputStream());
 
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 
 			while (true) {
+				ToServer = inFromUser.readLine();
+				outToServer.write(ToServer);
 
 				FromServer = inFromServer.readLine();
 
-				if (FromServer.equals("quit") ) {
+				if (FromServer.equals("quit")) {
 					sock.close();
 					break;
 				} else {
 					System.out.println("RECIEVED:" + FromServer);
 					System.out.println("SEND(Type Q or q to Quit):");
 
-					ToServer = inFromUser.readLine();
+					 
 
 					if (ToServer.equals("Q") || ToServer.equals("q")) {
 						outToServer.println(ToServer);
@@ -47,6 +49,10 @@ public class EchoClient {
 				}
 
 			}
+			inFromUser.close();
+			outToServer.close();
+			inFromServer.close();
+
 		} catch (UnknownHostException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
