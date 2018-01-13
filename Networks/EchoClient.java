@@ -26,23 +26,27 @@ public class EchoClient {
 
 			while (true) {
 				ToServer = inFromUser.readLine();
-				outToServer.write(ToServer);
-
+				
+				 
+				outToServer.println(ToServer);
+outToServer.flush();
+				
 				FromServer = inFromServer.readLine();
 
 				if (FromServer.equals("quit")) {
 					sock.close();
 					break;
 				} else {
+					
 					System.out.println("RECIEVED:" + FromServer);
 					System.out.println("SEND(Type Q or q to Quit):");
 
 					 
 
-					if (ToServer.equals("Q") || ToServer.equals("q")) {
+					if (ToServer.equals("quit")) {
 						outToServer.println(ToServer);
 						sock.close();
-						break;
+					break;
 					} else {
 						outToServer.println(ToServer);
 					}
@@ -60,6 +64,7 @@ public class EchoClient {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		System.out.println("out of loop");
 
 	}
 }
