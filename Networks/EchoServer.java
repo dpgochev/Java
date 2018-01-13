@@ -22,6 +22,7 @@ public class EchoServer {
 			ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
 			serverSocketChannel.socket().bind(new InetSocketAddress(4444));
 			Selector selector = Selector.open();
+					serverSocketChannel.configureBlocking(false);
 			serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 			ByteBuffer buffer = ByteBuffer.allocate(256);
 
