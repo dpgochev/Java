@@ -6,10 +6,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 
- 
-
 import java.nio.channels.SocketChannel;
- import java.util.Iterator;
+import java.util.Iterator;
 import java.nio.channels.ServerSocketChannel;
 
 import java.util.Set;
@@ -22,7 +20,7 @@ public class EchoServer {
 			ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
 			serverSocketChannel.socket().bind(new InetSocketAddress(4444));
 			Selector selector = Selector.open();
-					serverSocketChannel.configureBlocking(false);
+			serverSocketChannel.configureBlocking(false);
 			serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 			ByteBuffer buffer = ByteBuffer.allocate(256);
 
@@ -45,21 +43,19 @@ public class EchoServer {
 					}
 					if (key.isReadable()) {
 						try (SocketChannel sc = (SocketChannel) key.channel();) {
-
+							buffer.clear();
 							int i = sc.read(buffer);
 							if (i <= 0) {
 								continue;
 							}
-
-							StringBuilder reversed = new StringBuilder();
-							reversed.append(buffer.toString());
-							reversed = reversed.reverse();
 							buffer.flip();
-							buffer.put(reversed.toString().getBytes());
-							sc.write(buffer);
+							StringBuilder reversed = new StringBuilder();
+							reversed.append(new String(buffer.array()).trim());
+							reversed = reversed.reverse();
 							buffer.clear();
-							 
-
+						 buffer.put((reversed.toString() +"/n" ).getBytes());
+							buffer.flip();
+							sc.write(buffer);
 						}
 					}
 
